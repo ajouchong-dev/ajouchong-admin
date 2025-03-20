@@ -1,7 +1,7 @@
 import React from 'react';
-import './Header.css'; 
+import './menu.css';
 
-const Header = () => {
+const Menu = () => {
     return (
       <header className="main-header">
         <div className="top-bar">
@@ -25,4 +25,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default Menu;

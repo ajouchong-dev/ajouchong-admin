@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header';
+import Header from './components/Menu';
 import Login from './components/Login';
 import Notice from './components/Notice';
 import Introduce from './components/Introduce';
@@ -8,13 +8,14 @@ import Communicate from './components/Communicate';
 import Reference from './components/Reference';
 import Welfare from './components/Welfare';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from "./components/menu/menu";
 
 function App() {
   return (
-    <div className="app-container"> {/* 전체를 감싸는 컨테이너 */}
-      <Header /> {/* 헤더 */}
+    <div className="app-container">
+      <Menu />
       
-      <div className="content-wrapper"> {/* 메인 컨텐츠를 감싸는 컨테이너 */}
+      <div className="content-wrapper">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
