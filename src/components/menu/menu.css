@@ -1,0 +1,38 @@
+#main-menu {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-menu {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.side-menu li {
+  text-indent: 0;
+  line-height: 2.8em;
+  padding-bottom: 40px;
+}
+
+.side-menu li a {
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.side-menu li a:hover {
+  text-decoration: underline;
+  color: #6aaa7d;
+}
