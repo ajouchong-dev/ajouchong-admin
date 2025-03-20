@@ -1,90 +1,38 @@
-/* 상단바 스타일 */
-.top-bar {
-  background-color: #4a90e2;
-  /* 상단바 배경색 */
-  padding: 10px 20px;
+#main-menu {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  overflow-y: auto;
+
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.top-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.top-links a:hover {
-  color: #ffd700;
-  /* 호버 시 색상 */
-}
-
-/* 로고 스타일 */
-.logo {
-  text-align: center;
-  padding-top: 0;
-  padding-bottom: 20px;
-  margin: 0;
-  background-color: #4a90e2;
-}
-
-.logo h1 {
-  font-size: 2.5em;
-  color: #333;
-  letter-spacing: 2px;
-}
-
-/* 메뉴 네비게이션 스타일 */
-.main-nav {
-  background-color: #4a90e2;
-  border-top: 1px solid #357ABD;
-  border-bottom: 1px solid #357ABD;
-  padding: 10px 0;
-}
-
-.main-nav ul {
+.side-menu {
   list-style: none;
-  display: flex;
-  justify-content: center;
-  /* 메뉴 항목들을 중앙 정렬 */
-  margin: 0;
   padding: 0;
+  width: 100%;
+  text-align: center;
 }
 
-.main-nav ul li {
-  margin: 0 20px;
-  /* 각 메뉴 항목에 간격을 줌 */
+.side-menu li {
+  text-indent: 0;
+  line-height: 2.8em;
+  padding-bottom: 40px;
 }
 
-.main-nav ul li a {
+.side-menu li a {
+  display: block;
   text-decoration: none;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  padding: 10px 15px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 5px;
-}
-
-.main-nav ul li a:hover {
-  background-color: #357ABD;
-  color: white;
-}
-
-.main-nav ul li a.active {
-  background-color: #ffd700;
-  /* 선택된 메뉴의 배경색 */
   color: black;
 }
 
-.logo {
-  text-align: center;
-}
-
-.logo img {
-  max-width: 150px;
-  /* 원하는 너비로 설정 */
-  height: auto;
-  /* 높이를 자동으로 조절 */
+.side-menu li a:hover {
+  text-decoration: underline;
+  color: #6aaa7d;
 }
