@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {AuthProvider} from "./context/AuthContext";
 import Member from "./pages/member/member";
 import NoticeWrite from "./pages/notice/NoticeWrite";
+import QnA from "./pages/qna/QnA";
+import QnADetail from "./pages/qna/QnADetail";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ const Content = () => {
                 <Route path="/notice" element={<Notice />} />
                 <Route path="/notice/write" element={<NoticeWrite />} />
                 <Route path="/member" element={<Member />} />
+                <Route path="/qna" element={<QnA/>} />
+                <Route path="/qna/:id" element={<QnADetail/>} />
             </Routes>
         </>
     );
