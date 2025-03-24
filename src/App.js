@@ -5,6 +5,7 @@ import Login from './components/login/Login';
 import Notice from './pages/notice/Notice';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {AuthProvider} from "./context/AuthContext";
+import Member from "./pages/member/member";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ const Content = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/notice" element={<Notice />} />
+                <Route path="/member" element={<Member />} />
             </Routes>
         </>
     );
