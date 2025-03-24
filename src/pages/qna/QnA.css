@@ -29,7 +29,7 @@
 }
 
 .completed {
-    color: green;
+    color: #4CAF50;
     font-weight: bold;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .pagination button {
-    background: #007bff;
+    background: #4CAF50;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -56,10 +56,10 @@
 }
 
 .pagination button.active {
-    background: #0056b3;
+    background: #4CAF50;
     font-weight: bold;
 }
 
 .pagination button:hover {
-    background: #0056b3;
+    background: #4CAF50;
 }

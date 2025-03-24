@@ -55,6 +55,28 @@ const QnA = () => {
         }
     };
 
+    const deletePost = async (postId) => {
+        if (!window.confirm("정말로 게시글을 삭제하시겠습니까?")) return;
+
+        try {
+            const response = await axios.delete(`${BASE_URL}/api/admin/qna/${postId}`, {
+                withCredentials: true,
+            });
+
+            if (response.data.code === 1) {
+                alert("게시글이 삭제되었습니다.");
+                fetchPosts();
+                navigate("/qna");
+            } else {
+                console.error("Error deleting post:", response.data.message);
+                alert("게시글을 삭제하는데 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("API request error:", error);
+            alert("게시글을 삭제하는 중 오류가 발생했습니다.");
+        }
+    };
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -74,6 +96,7 @@ const QnA = () => {
                         <th>작성자</th>
                         <th>작성일</th>
                         <th>상태</th>
+                        <th>삭제</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,6 +109,11 @@ const QnA = () => {
                                 <td>{post.date}</td>
                                 <td className={post.status === "답변완료" ? "completed" : "pending"}>
                                     {post.status}
+                                </td>
+                                <td>
+                                    <button className="delete-button" onClick={() => deletePost(post.id)}>
+                                        삭제
+                                    </button>
                                 </td>
                             </tr>
                         ))
