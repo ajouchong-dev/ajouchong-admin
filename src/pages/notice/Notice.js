@@ -1,262 +1,130 @@
-// import React, { useState, useEffect } from 'react';
-// import './notice.css';
-//
-// const Notice = () => {
-//     const [posts, setPosts] = useState([]);
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState(null);
-//     const [selectedPost, setSelectedPost] = useState(null); // 특정 게시글 조회용 상태
-//
-//     // 게시글 불러오기
-//     const fetchPosts = async () => {
-//         // setLoading(true);
-//         // try {
-//         //     const response = await fetch('/api/notice');
-//         //     const data = await response.json();
-//         //     if (data.code === 1) {
-//         //         setPosts(data.data);
-//         //     } else {
-//         //         setError(data.message || "게시글을 불러오는 중 오류가 발생했습니다.");
-//         //     }
-//         // } catch (err) {
-//         //     setError("게시글을 불러오지 못했습니다.");
-//         // } finally {
-//         //     setLoading(false);
-//         // }
-//     };
-//
-//     // 특정 게시글 조회하기
-//     const fetchPostById = async (id) => {
-//         // setLoading(true);
-//         // try {
-//         //     const response = await fetch(`/api/notice/${id}`); // 특정 ID로 게시글 조회
-//         //     const data = await response.json();
-//         //     if (data.code === 1) {
-//         //         setSelectedPost(data.data); // 선택한 게시글을 상태로 저장
-//         //     } else {
-//         //         setError(data.message || "게시글을 조회하는 중 오류가 발생했습니다.");
-//         //     }
-//         // } catch (err) {
-//         //     setError("게시글 조회 중 오류가 발생했습니다.");
-//         // } finally {
-//         //     setLoading(false);
-//         // }
-//     };
-//
-//     // 게시글 삭제하기
-//     // const deletePost = async (id) => {
-//     //     setLoading(true);
-//     //     try {
-//     //         const token = 'your_jwt_token'; // 실제 JWT 토큰으로 교체
-//     //         const response = await fetch(`/api/notice/${id}`, {
-//     //             method: 'DELETE',
-//     //             headers: {
-//     //                 'Authorization': `Bearer ${token}`,
-//     //             },
-//     //         });
-//     //         const result = await response.json();
-//     //         if (result.code === 1) {
-//     //             alert(`${id}번 게시글이 삭제되었습니다.`);
-//     //             fetchPosts(); // 게시글 목록 새로 불러오기
-//     //         } else {
-//     //             setError(result.message || "게시글 삭제에 실패했습니다.");
-//     //         }
-//     //     } catch (error) {
-//     //         setError("게시글 삭제 중 오류가 발생했습니다.");
-//     //     } finally {
-//     //         setLoading(false);
-//     //     }
-//     // };
-//     //
-//     // useEffect(() => {
-//     //     fetchPosts(); // 컴포넌트가 마운트될 때 게시글 목록 불러오기
-//     // }, []);
-//
-//     if (loading) return <p>불러오는 중...</p>;
-//     if (error) return <p>{error}</p>;
-//
-//     return (
-//         <div className="notice-board">
-//
-//
-//             <div className='post-button'>
-//                 <div className='wrapper'>
-//                     <button>글쓰기</button>
-//                 </div>
-//             </div>
-//
-//
-//             <div className="posts-list">
-//                 {posts.length > 0 ? (
-//                     posts.map((post) => (
-//                         <div key={post.npost_id} className="notice-post">
-//                             <h3 className="notice-title">{post.npTitle}</h3>
-//                             <p className="notice-content">{post.npContent}</p>
-//                             <p className="notice-meta">
-//                                 <span>좋아요: {post.npUserLikeCnt}</span> |
-//                                 <span> 조회수: {post.npHitCnt}</span> |
-//                                 <span> 작성일: {new Date(post.npCreateTime).toLocaleDateString()}</span>
-//                             </p>
-//                             <button onClick={() => fetchPostById(post.npost_id)}>상세보기</button>
-//                             <button onClick={() => deletePost(post.npost_id)}>삭제</button>
-//                         </div>
-//                     ))
-//                 ) : (
-//                     // <p>게시글이 없습니다.</p>
-//                     // 지울때 여기 아래 <> </> 사이만 지우고 위에 주석은 다 원복해놓으면 처음으로 돌아갈거임.
-//                     <>
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//
-//                     <div key="123" className="notice-post">
-//                         <h3 className="notice-title">테스트 타이틀</h3>
-//                         <p className="notice-content">테스트 내용</p>
-//                         <p className="notice-meta">
-//                             <span>좋아요: 1234</span> |
-//                             <span> 조회수: 1234</span> |
-//                             <span> 작성일: 2021-94-44</span>
-//                         </p>
-//                         <button>상세보기</button>
-//                         <button>삭제</button>
-//                     </div>
-//                     </>
-//
-//                 )}
-//             </div>
-//
-//             {selectedPost && (
-//                 <div className="selected-post">
-//                     <h2>{selectedPost.npTitle}</h2>
-//                     <p>{selectedPost.npContent}</p>
-//                     <p>좋아요: {selectedPost.npUserLikeCnt}</p>
-//                     <p>조회수: {selectedPost.npHitCnt}</p>
-//                     <p>작성일: {new Date(selectedPost.npCreateTime).toLocaleDateString()}</p>
-//                     <p>이미지: {selectedPost.imageUrls.join(', ')}</p>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-//
-// export default Notice;
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import './notice.css';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+const Notice = () => {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 10;
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${BASE_URL}/api/notice`, {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true,
+            });
+
+            if (response.data.code === 1) {
+                const fetchedPosts = response.data.data.map(post => ({
+                    id: post.npost_id,
+                    imageUrl: post.imageUrls[0] || '/achim_square.jpeg',
+                    title: post.npTitle,
+                    date: new Date(post.npCreateTime).toLocaleDateString(),
+                }));
+                setPosts(fetchedPosts);
+            } else {
+                console.error('Error fetching data:', response.data.message);
+                setError('공지사항을 불러오는데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('API request error:', error);
+            setError('공지사항을 불러오는 중 오류가 발생했습니다.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deletePost = async (id) => {
+        if (!window.confirm(`${id}번 공지사항을 삭제하시겠습니까?`)) return;
+
+        setLoading(true);
+        try {
+            const response = await axios.delete(`${BASE_URL}/api/admin/notice/${id}`, {
+                withCredentials: true,
+            });
+
+            if (response.data.code === 1) {
+                alert(`${id}번 공지사항이 삭제되었습니다.`);
+                fetchPosts();
+            } else {
+                setError(response.data.message || "공지사항 삭제에 실패했습니다.");
+            }
+        } catch (error) {
+            setError("공지사항 삭제 중 오류가 발생했습니다.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const totalPages = Math.ceil(posts.length / postsPerPage);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
+    if (loading) return <p>불러오는 중...</p>;
+    if (error) return <p>{error}</p>;
+
+    return (
+        <div className="notice-container">
+            <div className="notice-header">
+                <h3 className="notice-title">{posts.length}개의 공지사항이 있습니다.</h3>
+                <button className="write-btn" onClick={() => navigate('/notice/write')}>공지사항 작성</button>
+            </div>
+
+            <table className="notice-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>제목</th>
+                    <th>등록일</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody>
+                {currentPosts.map((post) => (
+                    <tr key={post.id}>
+                        <td>{post.id}</td>
+                        <td>{post.title}</td>
+                        <td>{post.date}</td>
+                        <td>
+                            <button className="delete-btn" onClick={() => deletePost(post.id)}>삭제</button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+
+            <div className="pagination">
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    ◀ 이전
+                </button>
+                <span>{currentPage} / {totalPages}</span>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    다음 ▶
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default Notice;
