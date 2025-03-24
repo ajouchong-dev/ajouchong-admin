@@ -1,0 +1,147 @@
+.members-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.members-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.members-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.members-table th {
+    background-color: lightgrey;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.members-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.members-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.members-table th input,
+.members-table td input {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.2s;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.pagination button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.page-number {
+    font-weight: bold;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content p {
+    margin: 15px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.modal-buttons button:first-child {
+    background: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.modal-buttons button:last-child {
+    background: #dc3545;
+    color: white;
+    border: none;
+}
