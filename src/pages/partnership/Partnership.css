@@ -1,0 +1,134 @@
+.ps-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ps-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ps-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.write-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.write-btn:hover {
+    background: #388e3c;
+    transform: scale(1.05);
+}
+
+.ps-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    table-layout: fixed;
+}
+
+.ps-table th {
+    background: #f5f5f5;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.ps-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.ps-table th:nth-child(2), .ps-table td:nth-child(2) {
+    width: 50%;
+    min-width: 250px;
+    max-width: 400px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ps-table td:nth-child(2):hover {
+    overflow: visible;
+    white-space: normal;
+    background: #f1f8e9;
+    position: relative;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.delete-btn:hover {
+    background: #b22222;
+    transform: scale(1.05);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #4CAF50;
+    color: white;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.pagination button:hover {
+    background: #388e3c;
+    transform: scale(1.05);
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ps-table th:nth-child(1), .ps-table td:nth-child(1) {
+    width: 10%;
+    min-width: 50px;
+}
+
+.ps-table th:nth-child(3), .ps-table td:nth-child(3) {
+    width: 20%;
+    min-width: 100px;
+}
+
+.ps-table th:nth-child(4), .ps-table td:nth-child(4) {
+    width: 20%;
+    min-width: 80px;
+}

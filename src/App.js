@@ -11,6 +11,8 @@ import QnA from "./pages/qna/QnA";
 import QnADetail from "./pages/qna/QnADetail";
 import Agora from "./pages/agora/Agora";
 import AgoraDetail from "./pages/agora/AgoraDetail";
+import Partnership from "./pages/partnership/Parnership";
+import PartnershipWrite from "./pages/partnership/PartnershipWrite";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ const Content = () => {
                 <Route path="/qna/:id" element={<QnADetail/>} />
                 <Route path="/agora" element={<Agora/>} />
                 <Route path="/agora/:id" element={<AgoraDetail/>} />
+                <Route path="/partnership" element={<Partnership/>} />
+                <Route path="partnership/write" element={<PartnershipWrite/>} />
             </Routes>
         </>
     );
