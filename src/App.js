@@ -9,6 +9,8 @@ import Member from "./pages/member/member";
 import NoticeWrite from "./pages/notice/NoticeWrite";
 import QnA from "./pages/qna/QnA";
 import QnADetail from "./pages/qna/QnADetail";
+import Agora from "./pages/agora/Agora";
+import AgoraDetail from "./pages/agora/AgoraDetail";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ const Content = () => {
                 <Route path="/member" element={<Member />} />
                 <Route path="/qna" element={<QnA/>} />
                 <Route path="/qna/:id" element={<QnADetail/>} />
+                <Route path="/agora" element={<Agora/>} />
+                <Route path="/agora/:id" element={<AgoraDetail/>} />
             </Routes>
         </>
     );
