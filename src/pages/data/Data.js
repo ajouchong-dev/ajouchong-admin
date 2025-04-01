@@ -9,9 +9,13 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const Data = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [ruleType, setRuleType] = useState('OFFICIAL');
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 10;
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const navigate = useNavigate();
 
@@ -29,7 +33,6 @@ const Data = () => {
             console.log(response.data.data);
 
             setPosts(response.data.data);
-            setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error("데이터 불러오기 실패:", error);
         } finally {
@@ -59,17 +62,57 @@ const Data = () => {
         }
     };
 
+    const openModal = (post) => {
+        setSelectedPost(post);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedPost(null);
+    };
+
+    const handleOverlayClick = (e) => {
+        if (e.target.classList.contains("modal-overlay")) {
+            closeModal();
+        }
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape") {
+                closeModal();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const totalPages = Math.ceil(posts.length / postsPerPage);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
     return (
         <div className="admin-container">
             <div className="admin-header">
                 <h3 className="admin-title">{posts.length}개의 {ruleType} 게시글이 있습니다.</h3>
-                <button className="write-btn" onClick={() => navigate(`${BASE_URL}/admin/data/create`)}>게시글 등록</button>
+                <button className="write-btn" onClick={() => navigate(`/data/write`)}>게시글 등록</button>
             </div>
 
             {/* OFFICIAL, DETAIL 탭 버튼 */}
             <div className="tab-buttons">
-                <button className={ruleType === "OFFICIAL" ? "active" : ""} onClick={() => setRuleType("OFFICIAL")}>회칙</button>
-                <button className={ruleType === "DETAIL" ? "active" : ""} onClick={() => setRuleType("DETAIL")}>세칙</button>
+                <button className={ruleType === "OFFICIAL" ? "active" : ""} onClick={() => setRuleType("OFFICIAL")}>회칙
+                </button>
+                <button className={ruleType === "DETAIL" ? "active" : ""} onClick={() => setRuleType("DETAIL")}>세칙
+                </button>
             </div>
 
             <table className="admin-table">
@@ -84,16 +127,20 @@ const Data = () => {
                 </thead>
                 <tbody>
                 {loading ? (
-                    <tr><td colSpan="5">로딩 중...</td></tr>
-                ) : (
-                    posts.map((post) => (
-                        <tr key={post.rpostId}>
+                    <tr>
+                        <td colSpan="5">로딩 중...</td>
+                    </tr>
+                ) : (currentPosts.map((post) => (
+                        <tr key={post.rpostId} onClick={() => openModal(post)}>
                             <td>{post.rpostId}</td>
                             <td>{post.rpTitle}</td>
                             <td>{post.rpContent}</td>
                             <td>{post.ruleType}</td>
                             <td>
-                                <button className="delete-btn" onClick={() => deletePost(post.rpostId)}>삭제</button>
+                                <button className="delete-btn" onClick={(e) => {
+                                    e.stopPropagation();
+                                    deletePost(post.rpostId);
+                                }}>삭제</button>
                             </td>
                         </tr>
                     ))
@@ -102,10 +149,26 @@ const Data = () => {
             </table>
 
             <div className="pagination">
-                <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>◀ 이전</button>
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    ◀ 이전
+                </button>
                 <span>{currentPage} / {totalPages}</span>
-                <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>다음 ▶</button>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    다음 ▶
+                </button>
             </div>
+
+            {showModal && selectedPost && (
+                <div className="modal-overlay" onClick={handleOverlayClick}>
+                    <div className="modal-content">
+                        <button className="close-btn" onClick={closeModal}>×</button>
+                        <h2>{selectedPost.rpTitle}</h2>
+                        <p>{selectedPost.rpContent}</p>
+                        <p>Link: <a href={selectedPost.attachmentUrl}>{selectedPost.attachmentUrl}</a></p>
+                        <span className="modal-type">{selectedPost.ruleType}</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
