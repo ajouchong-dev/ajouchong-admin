@@ -42,7 +42,7 @@ jobs:
           DEPLOY_BRANCH="${GITHUB_REF##*/}"
 
           git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
-          cp -r ./* ./$CLONE_DIR/*
+          cp -r . ./$CLONE_DIR
           
           cd $CLONE_DIR
 
