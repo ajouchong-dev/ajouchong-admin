@@ -56,5 +56,5 @@ jobs:
           fi
 
           git add .
-          git commit -m "Deploy app [${{ github.sha }}]"
+          git commit -m "Deploy app [${{ github.sha }}]" || true          
           git push -f origin ${DEPLOY_BRANCH}
