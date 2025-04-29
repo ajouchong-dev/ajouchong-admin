@@ -33,7 +33,7 @@ jobs:
       - name: Build the React app
         run: npm run build
 
-      - name: Push built app to deployment repository
+      - name: Push full project to deployment repository
         env:
           GH_TOKEN: ${{ secrets.AUTO_ACTIONS }}
         run: |
@@ -42,19 +42,18 @@ jobs:
           DEPLOY_BRANCH="${GITHUB_REF##*/}"
 
           git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
-          rsync -av --exclude=deploy-repo/ --exclude='.git' ./ deploy-repo/
-          
+
+          rsync -av --exclude=deploy-repo/ --exclude=.git ./ $CLONE_DIR/
+
           cd $CLONE_DIR
 
-          git config --global user.name "ajou-chong"
-          git config --global user.email "ajouchongdev@gmail.com"
+          git config user.name "ajou-chong"
+          git config user.email "ajouchongdev@gmail.com"
 
-          if git show-ref --verify --quiet refs/heads/${DEPLOY_BRANCH}; then
-            git checkout ${DEPLOY_BRANCH}
-          else
-            git checkout -b ${DEPLOY_BRANCH}
-          fi
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git
+
+          git checkout $DEPLOY_BRANCH || git checkout -b $DEPLOY_BRANCH
 
           git add .
-          git commit -m "Deploy app [${{ github.sha }}]" || true          
-          git push -f origin ${DEPLOY_BRANCH}
+          git commit -m "Deploy app [${{ github.sha }}]" || echo "Nothing to commit"
+          git push -f origin $DEPLOY_BRANCH
