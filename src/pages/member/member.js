@@ -33,10 +33,6 @@ const Member = () => {
         fetchMembers();
     }, []);
 
-    const indexOfLastMember = currentPage * membersPerPage;
-    const indexOfFirstMember = indexOfLastMember - membersPerPage;
-    const currentMembers = members.slice(indexOfFirstMember, indexOfLastMember);
-
     const totalPages = Math.ceil(members.length / membersPerPage);
 
     const handlePageChange = (newPage) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,11 +19,7 @@ const Data = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchPosts();
-    }, [currentPage, ruleType]);
-
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BASE_URL}/api/data?type=${ruleType}`, {
@@ -31,14 +27,17 @@ const Data = () => {
             });
 
             console.log(response.data.data);
-
             setPosts(response.data.data);
         } catch (error) {
             console.error("데이터 불러오기 실패:", error);
         } finally {
             setLoading(false);
         }
-    };
+    }, [ruleType]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, [fetchPosts]);
 
     const deletePost = async (id) => {
         if (!window.confirm(`${id}번 게시글을 삭제하시겠습니까?`)) return;
@@ -49,9 +48,9 @@ const Data = () => {
                 withCredentials: true,
             });
 
-            if(response.data.code === 1) {
+            if (response.data.code === 1) {
                 alert(`${id}번 게시글 삭제 성공!`);
-                fetchPosts();
+                fetchPosts(); // 삭제 후 갱신
             } else {
                 console.error("Error deleting post:", response.data.message);
             }
@@ -109,10 +108,8 @@ const Data = () => {
 
             {/* OFFICIAL, DETAIL 탭 버튼 */}
             <div className="tab-buttons">
-                <button className={ruleType === "OFFICIAL" ? "active" : ""} onClick={() => setRuleType("OFFICIAL")}>회칙
-                </button>
-                <button className={ruleType === "DETAIL" ? "active" : ""} onClick={() => setRuleType("DETAIL")}>세칙
-                </button>
+                <button className={ruleType === "OFFICIAL" ? "active" : ""} onClick={() => setRuleType("OFFICIAL")}>회칙</button>
+                <button className={ruleType === "DETAIL" ? "active" : ""} onClick={() => setRuleType("DETAIL")}>세칙</button>
             </div>
 
             <table className="admin-table">
@@ -130,17 +127,23 @@ const Data = () => {
                     <tr>
                         <td colSpan="5">로딩 중...</td>
                     </tr>
-                ) : (currentPosts.map((post) => (
+                ) : (
+                    currentPosts.map((post) => (
                         <tr key={post.rpostId} onClick={() => openModal(post)}>
                             <td>{post.rpostId}</td>
                             <td>{post.rpTitle}</td>
                             <td>{post.rpContent}</td>
                             <td>{post.ruleType}</td>
                             <td>
-                                <button className="delete-btn" onClick={(e) => {
-                                    e.stopPropagation();
-                                    deletePost(post.rpostId);
-                                }}>삭제</button>
+                                <button
+                                    className="delete-btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deletePost(post.rpostId);
+                                    }}
+                                >
+                                    삭제
+                                </button>
                             </td>
                         </tr>
                     ))
@@ -164,7 +167,12 @@ const Data = () => {
                         <button className="close-btn" onClick={closeModal}>×</button>
                         <h2>{selectedPost.rpTitle}</h2>
                         <p>{selectedPost.rpContent}</p>
-                        <p>Link: <a href={selectedPost.attachmentUrl}>{selectedPost.attachmentUrl}</a></p>
+                        <p>
+                            Link:{" "}
+                            <a href={selectedPost.attachmentUrl} target="_blank" rel="noopener noreferrer">
+                                {selectedPost.attachmentUrl}
+                            </a>
+                        </p>
                         <span className="modal-type">{selectedPost.ruleType}</span>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./QnADetail.css";
@@ -16,11 +16,7 @@ const QnADetail = () => {
     const [answerSubmitting, setAnswerSubmitting] = useState(false);
     const [isAnswered, setIsAnswered] = useState(false);
 
-    useEffect(() => {
-        fetchPost();
-    }, []);
-
-    const fetchPost = async () => {
+    const fetchPost = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BASE_URL}/api/qna/${id}`, {
@@ -45,7 +41,11 @@ const QnADetail = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+        fetchPost();
+    }, [fetchPost]);
 
     const submitAnswer = async () => {
         if (!answer.trim()) {

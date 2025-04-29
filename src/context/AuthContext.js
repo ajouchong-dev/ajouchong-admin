@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const AuthContext = createContext();
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -10,11 +10,16 @@ export const AuthProvider = ({ children }) => {
             isAuthenticated: !!token,
             token,
             user: null,
-            loading: true, // 초기 로딩 상태 추가
+            loading: true,
         };
     });
 
-    const fetchUser = async (token) => {
+    const logout = useCallback(() => {
+        localStorage.removeItem("jwtToken");
+        setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
+    }, []);
+
+    const fetchUser = useCallback(async (token) => {
         try {
             const response = await fetch(`${BASE_URL}/api/login/auth/info`, {
                 method: "GET",
@@ -38,7 +43,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Error fetching user:", error);
             logout();
         }
-    };
+    }, [logout]);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
@@ -50,16 +55,11 @@ export const AuthProvider = ({ children }) => {
                 loading: false,
             }));
         }
-    }, []);
+    }, [fetchUser]);
 
     const login = (token, user) => {
         localStorage.setItem("jwtToken", token);
         setAuth({ isAuthenticated: true, token, user, loading: false });
-    };
-
-    const logout = () => {
-        localStorage.removeItem("jwtToken");
-        setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
     };
 
     return (

@@ -6,9 +6,9 @@ import {useNavigate} from "react-router-dom";
 
 import './login.css';
 
-const Login = ({ user, setUser }) => {
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-    const BASE_URL = process.env.REACT_APP_BASE_URL;
+const Login = ({ user, setUser }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Login = ({ user, setUser }) => {
                     }
                 );
 
-                const { status, data } = backendData;
+                const { data } = backendData;
                 const jwtToken = data.jwtToken;
 
                 if (jwtToken) {

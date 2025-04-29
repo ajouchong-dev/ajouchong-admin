@@ -1,5 +1,5 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 import './AgoraDetail.css';
@@ -17,24 +17,18 @@ const AgoraDetail = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        fetchPost();
-    }, []);
-
-    const fetchPost = async () => {
+    const fetchPost = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BASE_URL}/api/agora/${id}`, {
                 withCredentials: true,
             });
 
-            //console.log(response.data.data);
-
             if (response.data.code === 1) {
                 const post = response.data.data;
                 setPost(post);
 
-                if (post.approve){
+                if (post.approve) {
                     setApprove(true);
                 }
             } else {
@@ -46,7 +40,11 @@ const AgoraDetail = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+        fetchPost();
+    }, [fetchPost]); // 이제 안전하게 의존성에 넣을 수 있음
 
     const handleApprove = async () => {
         setApproving(true);
@@ -105,9 +103,8 @@ const AgoraDetail = () => {
                     </button>
                 )}
             </div>
-
         </div>
     );
-}
+};
 
 export default AgoraDetail;
