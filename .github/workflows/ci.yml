@@ -42,7 +42,7 @@ jobs:
           DEPLOY_BRANCH="${GITHUB_REF##*/}"
 
           git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
-          rsync -av --exclude=deploy-repo/ ./ deploy-repo/
+          rsync -av --exclude=deploy-repo/ --exclude='.git' ./ deploy-repo/
           
           cd $CLONE_DIR
 
