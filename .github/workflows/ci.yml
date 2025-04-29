@@ -13,44 +13,41 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "20"
 
-      - name: Enable Corepack and prepare pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest —activate
-
       - name: Install dependencies
-        run: pnpm install —frozen-lockfile
+        run: npm ci
 
-      - name: Create .env file
+      - name: Create .env file from secret
         run: |
-          echo "${{ secrets.APP_ENV }}" | base64 —decode > .env
+          echo "${{ secrets.APP_ENV }}" | base64 --decode > .env
 
-      - name: Build app
-        run: pnpm build
+      - name: Build the React app
+        run: npm run build
 
-      - name: Push to deployment repository
+      - name: Push built app to deployment repository
         env:
           GH_TOKEN: ${{ secrets.AUTO_ACTIONS }}
         run: |
           TARGET_REPO="ajou-chong/ajouchong-admin"
-          CLONE_DIR="/"
+          CLONE_DIR="deploy-repo"
           DEPLOY_BRANCH="${GITHUB_REF##*/}"
 
-          git clone —depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
+          git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
           cd $CLONE_DIR
 
-          git config —global user.name "GitHub Actions"
-          git config —global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git show-ref —verify —quiet refs/heads/${DEPLOY_BRANCH}; then
+          if git show-ref --verify --quiet refs/heads/${DEPLOY_BRANCH}; then
             git checkout ${DEPLOY_BRANCH}
           else
             git checkout -b ${DEPLOY_BRANCH}
@@ -59,16 +56,13 @@ jobs:
           rm -rf *
 
           mkdir -p app
-          cp -r ../dist/* ./app/  # 또는 ../build/*, 빌드 결과물 위치에 따라 조정
+          cp -r ../build/* ./app/  # npm 빌드 결과는 일반적으로 build/
 
           cp ../package.json .
-          cp ../pnpm-lock.yaml .
-          cp ../turbo.json .
-          if [ -f ../pnpm-workspace.yaml ]; then cp ../pnpm-workspace.yaml .; fi
-          if [ -f ../tsconfig.base.json ]; then cp ../tsconfig.base.json .; fi
+          cp ../package-lock.json .
 
           git add .
-          if git diff —cached —quiet; then
+          if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "Deploy app [${{ github.sha }}]"
