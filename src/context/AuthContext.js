@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const AuthContext = createContext();
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(() => {
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = useCallback(async (token) => {
         try {
-            const response = await fetch(`${BASE_URL}/api/login/auth/info`, {
+            const response = await fetch(`https://www.ajouchong.com/api/login/auth/info`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

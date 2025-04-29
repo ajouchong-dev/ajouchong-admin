@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import './notice.css';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const Notice = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,7 +21,7 @@ const Notice = () => {
     const fetchPosts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${BASE_URL}/api/notice`, {
+            const response = await axios.get(`https://www.ajouchong.com/api/notice`, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             });
@@ -53,7 +51,7 @@ const Notice = () => {
 
         setLoading(true);
         try {
-            const response = await axios.delete(`${BASE_URL}/api/admin/notice/${id}`, {
+            const response = await axios.delete(`https://www.ajouchong.com/api/admin/notice/${id}`, {
                 withCredentials: true,
             });
 

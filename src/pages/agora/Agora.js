@@ -4,8 +4,6 @@ import axios from "axios";
 
 import './Agora.css';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const AgoraPage = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,7 +21,7 @@ const AgoraPage = () => {
     const fetchPosts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${BASE_URL}/api/agora`, {
+            const response = await axios.get(`https://www.ajouchong.com/api/agora`, {
                 withCredentials: true,
             });
 
@@ -51,7 +49,7 @@ const AgoraPage = () => {
         if (!window.confirm("정말로 게시글을 삭제하시겠습니까?")) return;
 
         try {
-            const response = await axios.delete(`${BASE_URL}/api/admin/agora/${postId}`, {
+            const response = await axios.delete(`https://www.ajouchong.com/api/admin/agora/${postId}`, {
                 withCredentials: true,
             });
 

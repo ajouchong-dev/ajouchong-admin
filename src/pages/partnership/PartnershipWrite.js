@@ -4,8 +4,6 @@ import axios from "axios";
 
 import "./PartnershipWrite.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const PartnershipWrite = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -37,7 +35,7 @@ const PartnershipWrite = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post(`${BASE_URL}/api/admin/partnership`, formData, {
+            const response = await axios.post(`https://www.ajouchong.com/api/admin/partnership`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

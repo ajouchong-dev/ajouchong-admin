@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./member.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const Member = () => {
     const [members, setMembers] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
@@ -16,7 +14,7 @@ const Member = () => {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/api/admin/members`, {
+                const response = await axios.get(`https://www.ajouchong.com/api/admin/members`, {
                     withCredentials: true
                 });
 
@@ -63,7 +61,7 @@ const Member = () => {
         try {
             await Promise.all(
                 selectedMembers.map(async (id) => {
-                    await axios.delete(`${BASE_URL}/api/admin/members/${id}`, {
+                    await axios.delete(`https://www.ajouchong.com/api/admin/members/${id}`, {
                         withCredentials: true,
                     });
                 })
@@ -90,7 +88,7 @@ const Member = () => {
         if (!selectedMember) return;
 
         try {
-            const response = await axios.put(`${BASE_URL}/api/admin/members/${selectedMember.id}`,
+            const response = await axios.put(`https://www.ajouchong.com/api/admin/members/${selectedMember.id}`,
                 { role: newRole },
                 { withCredentials: true }
             );
