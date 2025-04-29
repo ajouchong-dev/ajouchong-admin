@@ -38,7 +38,7 @@ const Login = ({ user, setUser }) => {
                 const refreshToken = Cookies.get("refreshToken") || null;
 
                 const { data: backendData } = await axios.post(
-                    `https://localhost:8080/api/login/auth/oauth`,
+                    `https://www.ajouchong.com/api/login/auth/oauth`,
                     {
                         accessToken: tokenResponse.access_token,
                         refreshToken: refreshToken,
