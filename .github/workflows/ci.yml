@@ -53,14 +53,6 @@ jobs:
             git checkout -b ${DEPLOY_BRANCH}
           fi
 
-          rm -rf *
-
-          mkdir -p app
-          cp -r ../build/* ./app/  # npm 빌드 결과는 일반적으로 build/
-
-          cp ../package.json .
-          cp ../package-lock.json .
-
           git add .
           if git diff --cached --quiet; then
             echo "No changes to commit"
