@@ -1,0 +1,63 @@
+#main-menu {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  justify-content: flex-start; /* 위쪽 정렬 */
+  align-items: center;
+  padding-top: 20px; /* 상단 여백 추가 */
+}
+
+.login-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px; /* 로그인 아래 간격 */
+}
+
+.auth-button {
+  width: 80%;
+  padding: 10px;
+  background-color: #6aaa7d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #5c956d;
+}
+
+.side-menu {
+  list-style: none;
+  /*padding-top: 70px;*/
+  width: 100%;
+  text-align: center;
+}
+
+.side-menu li {
+  line-height: 2.8em;
+  padding-bottom: 30px;
+}
+
+.side-menu li a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 0;
+}
+
+.side-menu li a:hover {
+  text-decoration: underline;
+  color: #6aaa7d;
+}

@@ -1,0 +1,59 @@
+name: Deploy React App
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env file from secret
+        run: |
+          echo "${{ secrets.APP_ENV }}" | base64 --decode > .env
+
+      - name: Build the React app
+        run: npm run build
+
+      - name: Push full project to deployment repository
+        env:
+          GH_TOKEN: ${{ secrets.AUTO_ACTIONS }}
+        run: |
+          TARGET_REPO="ajou-chong/ajouchong-admin"
+          CLONE_DIR="deploy-repo"
+          DEPLOY_BRANCH="${GITHUB_REF##*/}"
+
+          git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git $CLONE_DIR
+
+          rsync -av --exclude=deploy-repo/ --exclude=.git ./ $CLONE_DIR/
+
+          cd $CLONE_DIR
+
+          git config user.name "ajou-chong"
+          git config user.email "ajouchongdev@gmail.com"
+
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git
+
+          git checkout $DEPLOY_BRANCH || git checkout -b $DEPLOY_BRANCH
+
+          git add .
+          git commit -m "Deploy app [${{ github.sha }}]" || echo "Nothing to commit"
+          git push -f origin $DEPLOY_BRANCH
