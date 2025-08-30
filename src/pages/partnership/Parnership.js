@@ -4,6 +4,10 @@ import axios from "axios";
 
 import './Partnership.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const Partnership = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -21,7 +25,7 @@ const Partnership = () => {
     const fetchPosts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://www.ajouchong.com/api/partnership`, {
+            const response = await apiClient.get(`/api/partnership`, {
                 withCredentials: true,
             });
 
@@ -51,7 +55,7 @@ const Partnership = () => {
 
         setLoading(true);
         try {
-            const response = await axios.delete(`https://www.ajouchong.com/api/admin/partnership/${id}`, {
+            const response = await apiClient.delete(`/api/admin/partnership/${id}`, {
                 withCredentials: true,
             });
 

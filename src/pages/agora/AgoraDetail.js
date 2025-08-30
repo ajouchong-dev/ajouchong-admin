@@ -4,6 +4,10 @@ import axios from "axios";
 
 import './AgoraDetail.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const AgoraDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -18,7 +22,7 @@ const AgoraDetail = () => {
     const fetchPost = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://www.ajouchong.com/api/agora/${id}`, {
+            const response = await apiClient.get(`/api/agora/${id}`, {
                 withCredentials: true,
             });
 
@@ -47,8 +51,8 @@ const AgoraDetail = () => {
     const handleApprove = async () => {
         setApproving(true);
         try {
-            const response = await axios.put(
-                `https://www.ajouchong.com/api/admin/agora/${id}/approve`,
+            const response = await apiClient.put(
+                `/api/admin/agora/${id}/approve`,
                 {},
                 { withCredentials: true }
             );

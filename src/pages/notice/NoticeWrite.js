@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './noticeWrite.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const NoticeWrite = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -34,7 +38,7 @@ const NoticeWrite = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post(`https://www.ajouchong.com/api/admin/notice`, formData, {
+            const response = await apiClient.post(`/api/admin/notice`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

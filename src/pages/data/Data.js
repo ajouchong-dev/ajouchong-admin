@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./Data.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
 
 const Data = () => {
     const [posts, setPosts] = useState([]);
@@ -22,7 +24,7 @@ const Data = () => {
     const fetchPosts = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${BASE_URL}/api/data?type=${ruleType}`, {
+            const response = await apiClient.get(`/api/data?type=${ruleType}`, {
                 withCredentials: true,
             });
 
@@ -44,7 +46,7 @@ const Data = () => {
 
         setLoading(true);
         try {
-            const response = await axios.delete(`${BASE_URL}/api/admin/data/${id}`, {
+            const response = await apiClient.delete(`/api/admin/data/${id}`, {
                 withCredentials: true,
             });
 

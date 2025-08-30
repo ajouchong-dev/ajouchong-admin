@@ -4,7 +4,9 @@ import axios from "axios";
 
 import "./DataWrite.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
 
 const DataWrite = () => {
     const [title, setTitle] = useState('');
@@ -35,7 +37,7 @@ const DataWrite = () => {
                 ruleType: ruleType
             };
 
-            const response = await axios.post(`${BASE_URL}/api/admin/data`, requestData, {
+            const response = await apiClient.post(`/api/admin/data`, requestData, {
                 withCredentials: true,
             });
 

@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./QnA.css";
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const QnA = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -20,7 +24,7 @@ const QnA = () => {
     const fetchPosts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://www.ajouchong.com/api/qna`, {
+            const response = await apiClient.get(`/api/qna`, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             });
@@ -57,7 +61,7 @@ const QnA = () => {
         if (!window.confirm("정말로 게시글을 삭제하시겠습니까?")) return;
 
         try {
-            const response = await axios.delete(`https://www.ajouchong.com/api/admin/qna/${postId}`, {
+            const response = await apiClient.delete(`/api/admin/qna/${postId}`, {
                 withCredentials: true,
             });
 

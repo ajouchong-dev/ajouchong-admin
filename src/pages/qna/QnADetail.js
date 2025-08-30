@@ -3,7 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./QnADetail.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
 
 const QnADetail = () => {
     const { id } = useParams();
@@ -19,7 +21,7 @@ const QnADetail = () => {
     const fetchPost = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${BASE_URL}/api/qna/${id}`, {
+            const response = await apiClient.get(`/api/qna/${id}`, {
                 withCredentials: true,
             });
 
@@ -55,8 +57,8 @@ const QnADetail = () => {
 
         setAnswerSubmitting(true);
         try {
-            const response = await axios.post(
-                `${BASE_URL}/api/admin/qna/${id}/answer`,
+            const response = await apiClient.post(
+                `/api/admin/qna/${id}/answer`,
                 { content: answer },
                 {
                     withCredentials: true,
@@ -84,7 +86,7 @@ const QnADetail = () => {
         if (!window.confirm("답변을 삭제하시겠습니까?")) return;
 
         try {
-            const response = await axios.delete(`${BASE_URL}/api/admin/qna/${id}/answer`, {
+            const response = await apiClient.delete(`/api/admin/qna/${id}/answer`, {
                 withCredentials: true,
             });
 

@@ -6,6 +6,10 @@ import {useNavigate} from "react-router-dom";
 
 import './login.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const Login = ({ user, setUser }) => {
     const navigate = useNavigate();
 
@@ -37,8 +41,8 @@ const Login = ({ user, setUser }) => {
 
                 const refreshToken = Cookies.get("refreshToken") || null;
 
-                const { data: backendData } = await axios.post(
-                    `https://www.ajouchong.com/api/login/auth/oauth`,
+                const { data: backendData } = await apiClient.post(
+                    `/api/login/auth/oauth`,
                     {
                         accessToken: tokenResponse.access_token,
                         refreshToken: refreshToken,
@@ -79,7 +83,7 @@ const Login = ({ user, setUser }) => {
 
     const logout = async () => {
         try {
-            await axios.post(`https://www.ajouchong.com/api/login/auth/logout`,
+            await apiClient.post(`/api/login/auth/logout`,
                 {},
                 { withCredentials: true }
             );

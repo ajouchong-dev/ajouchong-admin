@@ -4,6 +4,10 @@ import axios from "axios";
 
 import "./PartnershipWrite.css";
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const PartnershipWrite = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -35,7 +39,7 @@ const PartnershipWrite = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post(`https://www.ajouchong.com/api/admin/partnership`, formData, {
+            const response = await apiClient.post(`/api/admin/partnership`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

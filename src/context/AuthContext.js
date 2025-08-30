@@ -1,4 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import axios from "axios";
+
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
 
 const AuthContext = createContext();
 
@@ -20,16 +25,15 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = useCallback(async (token) => {
         try {
-            const response = await fetch(`https://www.ajouchong.com/api/login/auth/info`, {
-                method: "GET",
+            const response = await apiClient.get(`/api/login/auth/info`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
             });
 
-            if (response.ok) {
-                const userData = await response.json();
+            if (response.status === 200) {
+                const userData = response.data;
                 setAuth((prev) => ({
                     ...prev,
                     user: userData,
