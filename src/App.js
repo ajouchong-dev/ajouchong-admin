@@ -15,6 +15,8 @@ import Partnership from "./pages/partnership/Parnership";
 import PartnershipWrite from "./pages/partnership/PartnershipWrite";
 import Data from "./pages/data/Data";
 import DataWrite from "./pages/data/DataWrite";
+import LinkHub from "./pages/linkhub/linkHub";
+import LinkHubWrite from "./pages/linkhub/LinkHubWrite";
 
 function App() {
   return (
@@ -48,6 +50,8 @@ const Content = () => {
                 <Route path="/partnership/write" element={<PartnershipWrite/>} />
                 <Route path="/data" element={<Data />} />
                 <Route path="/data/write" element={<DataWrite />} />
+                <Route path="/linkHub" element={<LinkHub />} />
+                <Route path="/linkhub/write" element={<LinkHubWrite />} />
             </Routes>
         </>
     );

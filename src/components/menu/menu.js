@@ -16,7 +16,7 @@ const Menu = () => {
               <li><a href="/qna">Q&A</a></li>
               <li><a href="/agora">100인 안건 상정제</a></li>
               <li><a href="/data">세칙 및 회칙</a></li>
-              <li><a href="/partnership">제휴백과</a></li>
+              <li><a href="/linkhub">Linkhub</a></li>
           </ul>
       </div>
     );
